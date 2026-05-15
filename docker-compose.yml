@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # 1. The Ollama Engine Container
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-server
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  # 2. The Auto-Puller (Downloads models automatically, then exits)
+  ollama-pull-models:
+    image: ollama/ollama:latest
+    container_name: ollama-model-puller
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      echo 'Waiting for Ollama server to start...';
+      sleep 5;
+      echo 'Downloading nomic-embed-text (Embeddings)...';
+      ollama pull nomic-embed-text;
+      echo 'Downloading llama3.1 (Heavy Reasoning)...';
+      ollama pull llama3.1;
+      echo 'Downloading qwen2.5:3b (Fast Critique)...';
+      ollama pull qwen2.5:3b;
+      echo 'All models ready!';
+      "
+
+  # 3. Your Streamlit Research App
+  research-app:
+    build: .
+    container_name: research-assistant-ui
+    ports:
+      - "8505:8501"
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./output:/app/output
+      - ./.chromadb:/app/.chromadb
+
+volumes:
+  ollama_data:

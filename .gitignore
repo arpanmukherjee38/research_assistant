@@ -1,0 +1,13 @@
+# Ignore the local vector database
+.chromadb/
+
+# Ignore generated markdown reports
+output/
+
+# Ignore Python cache files (makes the repo look clean)
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore environment files (Just in case you ever add a .env file with real API keys later!)
+.env
