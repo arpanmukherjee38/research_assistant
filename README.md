@@ -26,7 +26,10 @@ Because everything runs through **Ollama** with locally-hosted open-source model
 
 ## 🎥 Demo
 
-<!-- Uploading "demo.mp4"... -->
+
+https://github.com/user-attachments/assets/0b5f15d5-456d-470e-ac44-7de023fb5960
+
+
 
 ## Architecture
 
