@@ -24,6 +24,10 @@ Because everything runs through **Ollama** with locally-hosted open-source model
 
 ---
 
+## 🎥 Demo
+
+https://github.com/arpanmukherjee38/research_assistant/videos/demo.mp4
+
 ## Architecture
 
 ```
